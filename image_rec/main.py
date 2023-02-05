@@ -14,16 +14,16 @@ while True:
     r = frame[:,:,2:]
     g = frame[:,:,1:2]
     b = frame[:,:,:1]
-    imageROI = cv2.selectROI(frame)
-    cv2.imshow("roi",imageROI)
+    # imageROI = cv2.selectROI(frame)
+    # cv2.imshow("roi",imageROI)
     
     #dividing up video region
     (h, w)= frame.shape[:2]
     width, height = (w // 2),(h // 2)
-    sq1 = frame[0:width,0:height]
-    sq2 = frame[0:width,0:height]
-    cv2.imshow("sq1",sq1)
-    cv2.imshow("sq2",sq2)
+    # sq1 = frame[0:width,0:height]
+    # sq2 = frame[0:width,0:height]
+    # cv2.imshow("sq1",sq1)
+    # cv2.imshow("sq2",sq2)
     
     #find the mean
     r_mean = np.mean(r)

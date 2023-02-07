@@ -5,17 +5,19 @@ import numpy as np
 # 0 denotes capture from webcam - may need to change for robosub.
 video = cv2.VideoCapture(0)
 
-l_b = np.array([0, 230, 170])  # lower hsv bound for red
-u_b = np.array([255, 255, 220])  # upper hsv bound to red
+l_b = np.array([0, 200, 150])  # lower hsv bound for red
+u_b = np.array([275, 275, 250])  # upper hsv bound to red
 cx, cy = 0, 0
 while True:
     ret, frame = video.read()
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    # rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     mask = cv2.inRange(hsv, l_b, u_b)  # color range to look for
 
     contours, _ = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)  # finds contours of object
+    # print(str(contours) + str(_))
     if (contours):  # run only if there are contours found (prevents crashing)
         max_contour = contours[0]
         for contour in contours:
@@ -27,13 +29,13 @@ while True:
             # set the x, y, width and height to bound approximations
             x, y, w, h = cv2.boundingRect(approx)
 
-            # bounding box around object
-            rect = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 5)
-            # centroid dot
-            center = cv2.circle(frame, (cx, cy), 10, (0, 255, 0), -1)
-            # c centroid label
-            cv2.putText(rect, str(cx) + ", " + str(cy), (x, y-10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
+        # bounding box around object
+        rect = cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 5)
+        # centroid dot
+        center = cv2.circle(frame, (cx, cy), 10, (0, 255, 0), -1)
+        # c centroid label
+        cv2.putText(rect, str(cx) + ", " + str(cy), (x, y-10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)
 
         M = cv2.moments(contour)  # for finding the centroid of the rectangle
         if M["m00"] != 0:  # ensures no division by zero

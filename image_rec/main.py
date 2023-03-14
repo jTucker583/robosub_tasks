@@ -17,7 +17,7 @@ while True:
 
     contours, _ = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)  # finds contours of object
-    # print(str(contours) + str(_))
+    print(str(contours))
     if (contours):  # run only if there are contours found (prevents crashing)
         max_contour = contours[0]
         for contour in contours:
